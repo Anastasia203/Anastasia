@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,34 +8,96 @@ namespace lab1
 {
     class Rectangles
     {
-        public int width, height, x, y;
-        public Rectangles(int width, int height, int x, int y)
+        private int  x, y;
+        private double width, height;
+        public Rectangles(double width, double height, int x, int y)
         {
             this.width = width; this.height = height; this.x = x; this.y = y;
+        }
+        public int X
+        {
+            set
+            {
+
+                x = value;
+
+            }
+            get
+            {
+                return x;
+            }
+        }
+        public int Y
+        {
+            set
+            {
+                x = value;
+            }
+            get
+            {
+                return x;
+            }
+        }
+        public double Width
+        {
+            set
+            {
+                if (value < 0)
+                {
+                    Console.WriteLine("Ширина прямоугольника не может быть меньше 0");
+                }
+                else
+                {
+                    width = value;
+                }
+            }
+            get
+            {
+                return width;
+            }
+        }
+        public double Height
+        {
+            set
+            {
+                if (value < 0)
+                {
+                    Console.WriteLine("Высота прямоугольника не может быть меньше 0");
+                }
+                else
+                {
+                    height = value;
+                }
+            }
+            get
+            {
+                return height;
+            }
         }
         public void Moving(int x, int y)
         {
             this.x = x; this.y = y;
         }
-        public void Resize(int width, int height)
+        public void Resize(double width, double height, double r)
         {
-            this.width = width; this.height = height;
+            this.width = width * r;
+            this.height = height * r;
         }
-        public void MinRec(int width, int height, int x, int y, int width1, int height1, int x1, int y1)
+        public void MinRec(double width, double height, int x, int y, double width1, double height1, int x1, int y1)
         {
             int ymax = Math.Max(y, y1);
-            int ymin = Math.Min(y - height, y1 - height1);
-            int xmax = Math.Max(x + width1, x1 + width1);
+            double ymin = Math.Min(y - height, y1 - height1);
+            double xmax = Math.Max(x + width1, x1 + width1);
             int xmin = Math.Max(x, x1);
             Console.WriteLine("Координаты полученного прямоугольника: ({0},{1}), ({2},{3}), " +
                             "({4},{5}), ({6},{7})", xmin, ymax, xmax, ymax, xmax, ymin, xmin, ymin);
         }
-        public void Intersection(int width, int height, int x, int y, int width1, int height1, int x1, int y1)
+        public void Intersection(double width, double height, int x, int y, double width1, double height1, int x1, int y1)
         {
-            int w = 0, xb = 0, ya = 0, yb = 0, h = 0;
+            double w = 0, xb = 0, ya = 0, yb = 0, h = 0;
             int yma = Math.Max(y, y1);
-            int ym = Math.Min(y - height, y1 - height1);
-            int xma = Math.Max(x + width, x1 + width1); //крайняя правая точка
+            double ym = Math.Min(y - height, y1 - height1);
+            double xma = Math.Max(x + width, x1 + width1); //крайняя правая точка
             int xm = Math.Max(x, x1); //крайняя левая точка
             if (xma < xm)
             {
@@ -45,12 +107,12 @@ namespace lab1
             {
                 if (x + width < x1 + width1)
                 {
-                    int xa = x + width; xb = x1;
+                    double xa = x + width; xb = x1;
                     w = xa - xb;
                 }
                 else if (x + width > x1 + width1)
                 {
-                    int xa = x1 + width1; xb = x;
+                    double xa = x1 + width1; xb = x;
                     w = xa - xb;
                 }
                 if (y <= y1 && (y - height) >= (y1 - height1))
@@ -64,12 +126,13 @@ namespace lab1
                     h = ya - yb;
                 }
             }
-           
+
         }
         public void GetRec()
         {
             Console.WriteLine("Координаты полученного прямоугольника: ({0},{1}), ({2},{3}), " +
                "({4},{5}), ({6},{7})", x, y, x + width, y, x + width, y - height, x, y - height);
-        } 
+        }
     }
 }
+
